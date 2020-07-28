@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/jquery.js"></script>
+    <title>{{title}}</title>
+</head>
+<body>
+    {{!-- header/nav bar --}}
+    <nav class="navbar navbar-expand-md navbar-dark bg-success mb-5">
+        <div class="container">
+            <a class="navbar-brand" href="/"><h1>CrikCarrier</h1></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggler">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase {{homeActive}} rounded-pill text-center" href="/">Home</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-uppercase {{addMatchActive}} rounded-pill text-center" href="/match/addMatch">Add Match</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link text-uppercase rounded-pill text-center {{viewActive}}" href="javascript:void(0)" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">View</a>
+                        <ul class="dropdown-menu border-0 bg-transparent" aria-labelledby="dropdownMenuButton">
+                            <li class="nav-item">
+                                <a class="dropdown-item nav-link text-uppercase rounded-pill text-center text-wrap my-1 bg-success" href="/views/overall">Overall</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="dropdown-item nav-link text-uppercase rounded-pill text-center text-wrap my-1 bg-success" href="/views/perTrnmnt">Per Tournament</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="dropdown-item nav-link text-uppercase rounded-pill text-center text-wrap my-1 bg-success" href="/views/perFormat">Per Format</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!-- <li class="nav-item dropdown">
+                        <a class="nav-link text-uppercase rounded-pill text-center {{progressActive}}" href="javascript:void(0)" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Progress</a>
+                        <ul class="dropdown-menu border-0 bg-transparent" aria-labelledby="dropdownMenuButton">
+                            <li class="nav-item">
+                                <a class="dropdown-item nav-link text-uppercase rounded-pill text-center text-wrap my-1 bg-success" href="/progress/monthly">Monthly</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="dropdown-item nav-link text-uppercase rounded-pill text-center text-wrap my-1 bg-success" href="/progress/yearly">Yearly</a>
+                            </li>
+                        </ul>
+                    </li> -->
+
+
+                    </li class="nav-item">
+                        <a class="nav-link text-uppercase {{aboutUsActive}} rounded-pill text-center" href="/aboutUs">About Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {{{body}}}
+    </div>
+
+    {{!-- footer --}}
+    <div class="footer bg-success pt-2 text-white mt-5">
+        <hr class="bg-white mx-5">
+        <div class="footerBody">
+            <div class="container">
+                <div class="row justify-content-between text-center">
+                    <p class="col-md-6">CrikCarrier &copy; 2019</p>
+                    <p class="col-md-4"><a href="https://facebook.com/inamullah.handoo" class="text-white text-monospace">Designed & Developed by Inamullah</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/js/popper.js"></script>
+    <script src="/js/bootstrap.js"></script>
+    <script src="/js/script.js"></script>
+</body>
+</html>

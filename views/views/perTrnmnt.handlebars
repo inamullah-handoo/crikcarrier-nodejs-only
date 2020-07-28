@@ -1,0 +1,189 @@
+<div class="form-inline mx-auto w-25">
+    <label for="trnmnt"><h5 class="mb-0">Tournament</h5></label>
+    <select name="trnmnt" id="trnmnt" class="form-control ml-3">
+        {{{trnmnt}}}
+    </select>
+</div>
+<div id="matches"class="mt-5"></div>
+
+<script>
+    $(document).ready(() => {
+        getMatches();
+        $('#trnmnt')[0].addEventListener('change', getMatches);
+        
+        function getMatches(){
+            var trnmnt = $('#trnmnt')[0].value;
+            $.ajax({
+                type: 'POST',
+                url: '/views/perTrnmnt/' + trnmnt,
+                success: function(response){
+                    let matchIDs = [];
+                    for(var i=0; i<response.match.length; i++){
+                        matchIDs.push(response.match[i].matchID);
+                    }
+
+                    let bat = [];
+                    let flag = 0;
+                    for(var j=0; j<matchIDs.length; j++){
+                        for(i=0; i<response.bat.length; i++){
+                            if(response.bat[i].matchID == matchIDs[j]){
+                                bat.push(response.bat[i]);
+                                flag = 0;
+                                break;
+                            }else{
+                                flag = 1;
+                            }
+                        }
+                        if(flag == 1 || response.bat.length == 0){
+                            bat.push({msg: 'Didn\'t Bat'});
+                        }
+                    }
+
+                    let bowl = [];
+                    flag = 0;
+                    for(j=0; j<matchIDs.length; j++){
+                        for(i=0; i<response.bowl.length; i++){
+                            if(response.bowl[i].matchID == matchIDs[j]){
+                                bowl.push(response.bowl[i]);
+                                flag = 0;
+                                break;
+                            }else{
+                                flag = 1;
+                            }
+                        }
+                        if(flag == 1 || response.bowl.length == 0){
+                            bowl.push({msg: 'Didn\'t Bowl'});
+                        }
+                    }
+
+                    // output
+                    let matchOP = '';
+                    let batOP = '';
+                    let bowlOP = '';
+                    let fieldOP = '';
+                    let output = '';
+                    for(i=0; i<matchIDs.length; i++){
+                        matchOP = `
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="date" class="font-weight-bold">Date</label>
+                                    <span class="ml-2">${response.match[i].date}</span>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="playedAgainst" class="font-weight-bold">Played Against</label>
+                                    <span class="ml-2">${response.match[i].playedAgainst}</span>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="playedAt" class="font-weight-bold">Played At</label>
+                                    <span class="ml-2">${response.match[i].playedAt}</span>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="matchOvers" class="font-weight-bold">Match Overs</label>
+                                    <span class="ml-2">${response.match[i].matchOvers}</span>
+                                </div>
+                            </div>
+                        `;
+
+                        if(bat[i].msg){
+                            batOP = `<div class="font-weight-bold">${bat[i].msg}</div>`;
+                        }else{
+                            if(bat[i].batNO){
+                                bat[i].batRuns += '*';
+                            }
+                            batOP = `
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <label for="runs" class="font-weight-bold">Runs</label>
+                                        <span class="ml-2">${bat[i].batRuns}</span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label for="balls" class="font-weight-bold">Balls</label>
+                                        <span class="ml-2">${bat[i].batBalls}</span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label for="sr" class="font-weight-bold">Strike Rate</label>
+                                        <span class="ml-2">${bat[i].batSR}</span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label for="4s" class="font-weight-bold">Fours</label>
+                                        <span class="ml-2">${bat[i].bat4}</span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label for="6s" class="font-weight-bold">Sixes</label>
+                                        <span class="ml-2">${bat[i].bat6}</span>
+                                    </div>
+                                </div>
+                            `;
+                        }
+
+                        if(bowl[i].msg){
+                            bowlOP = `<div class="font-weight-bold">${bowl[i].msg}</div>`;
+                        }else{
+                            bowlOP = `
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <label for="overs" class="font-weight-bold">Overs</label>
+                                        <span class="ml-2">${bowl[i].bowlOvers}</span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label for="runs" class="font-weight-bold">Runs</label>
+                                        <span class="ml-2">${bowl[i].bowlRuns}</span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label for="wickets" class="font-weight-bold">Wickets</label>
+                                        <span class="ml-2">${bowl[i].bowlWickets}</span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label for="maidens" class="font-weight-bold">Maidens</label>
+                                        <span class="ml-2">${bowl[i].bowlMaidens}</span>
+                                    </div>
+                                    <div class="col-sm">
+                                        <label for="dots" class="font-weight-bold">Dot Balls</label>
+                                        <span class="ml-2">${bowl[i].bowlDots}</span>
+                                    </div>
+                                </div>
+                            `;
+                        }
+
+                        fieldOP = `
+                            <div class="row">
+                                <div class="col-sm">
+                                    <label for="catches" class="font-weight-bold">Catches</label>
+                                    <span class="ml-2">${response.field[i].catches}</span>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="ro" class="font-weight-bold">Run Outs</label>
+                                    <span class="ml-2">${response.field[i].RO}</span>
+                                </div>
+                                <div class="col-sm">
+                                    <label for="stumps" class="font-weight-bold">Stumps</label>
+                                    <span class="ml-2">${response.field[i].stumps}</span>
+                                </div>
+                                <div class="col-sm" class="font-weight-bold">
+                                    <a href="/match/viewMatch/${matchIDs[i]}" class="btn btn-success">View More</a>
+                                </div>
+                            </div>
+                        `;
+
+                        output += `
+                            <div class="alert alert-success">
+                                ${matchOP}
+                                <hr class="bg-success">
+                                ${batOP}
+                                <hr class="bg-success">
+                                ${bowlOP}
+                                <hr class="bg-success">
+                                ${fieldOP}
+                            </div>
+                        `;
+                    }
+
+                    $('#matches')[0].innerHTML = output;
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
+        }
+    });
+</script>

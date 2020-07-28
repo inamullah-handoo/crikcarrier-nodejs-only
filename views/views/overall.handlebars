@@ -1,0 +1,232 @@
+<div class="form-inline mx-auto w-25 mb-5">
+    <label for="matchOvers"><h5 class="mb-0">Overs</h5></label>
+    <select name="matchOvers" id="matchOvers" class="form-control ml-3">
+        {{{overs}}}
+    </select>
+</div>
+<div class="alert alert-success w-75 mx-auto">
+    <div class="row px-3">
+        <h3>Batting</h3>
+        <div id="batPosSelect" class="form-inline ml-auto w-50"></div>
+    </div>
+    <hr class="bg-success">
+    <div class="row batDetails"></div>
+</div>
+<div class="alert alert-success w-75 mx-auto mt-5">
+    <h3>Bowling</h3>
+    <hr class="bg-success">
+    <div class="row bowlDetails"></div>
+</div>
+<div class="alert alert-success w-75 mx-auto mt-5">
+    <h3>Fielding</h3>
+    <hr class="bg-success">
+    <div class="row fieldDetails"></div>
+</div>
+
+<script>
+    $(document).ready(() => {
+        var matches;
+        getResult();
+        $('#matchOvers')[0].addEventListener('change', getResult);
+        
+        function getResult(){
+            var matchOvers = $('#matchOvers')[0].value;
+            $.ajax({
+                type:'POST',
+                url: '/views/overall/'+matchOvers,
+                success: function(response){
+                    matches = response.matches;
+                    let output = `
+                            <label for="batPos "><h5 class="mb-0">Batting Position</h5></label>
+                            <select name="batPos" id="batPos" class="form-control ml-3">
+                                ${response.batPos}
+                            </select>
+                    `;
+                    $('#batPosSelect')[0].innerHTML = output;
+                    output = `
+                        <div class="col-sm">
+                            <table class="table table-hover table-borderless">
+                                <tr>
+                                    <td><h5>Overs</h5></td>
+                                    <td><h5>${response.bowlOvers}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Runs</h5></td>
+                                    <td><h5>${response.bowlRuns}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Dot Balls</h5></td>
+                                    <td><h5>${response.bowlDots}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Maidens</h5></td>
+                                    <td><h5>${response.bowlMaidens}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Extras</h5></td>
+                                    <td><h5>${response.bowlExtras}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Fours</h5></td>
+                                    <td><h5>${response.bowl4}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Sixes</h5></td>
+                                    <td><h5>${response.bowl6}</h5></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-sm">
+                            <table class="table table-hover table-borderless">
+                                <tr>
+                                    <td><h5>Matches</h5></td>
+                                    <td><h5>${matches}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Innings</h5></td>
+                                    <td><h5>${response.bowlIngs}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Wickets</h5></td>
+                                    <td><h5>${response.bowlWickets}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>5WI</h5></td>
+                                    <td><h5>${response.bowl5WI}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Average</h5></td>
+                                    <td><h5>${response.bowlAvg}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Strike Rate</h5></td>
+                                    <td><h5>${response.bowlSR}</h5></td>
+                                </tr>
+                                <tr>
+                                    <td><h5>Best</h5></td>
+                                    <td><h5>${response.bowlBest}</h5></td>
+                                </tr>
+                            </table>
+                        </div>
+                    `;
+                    $('.bowlDetails')[0].innerHTML = output;
+                    output = `
+                        <table class="table table-hover table-borderless">
+                            <tr>
+                                <td><h5>Catches</h5></td>
+                                <td><h5>${response.catches}</h5></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Run Outs</h5></td>
+                                <td><h5>${response.RO}</h5></td>
+                            </tr>
+                            <tr>
+                                <td><h5>Stumps</h5></td>
+                                <td><h5>${response.stumps}</h5></td>
+                            </tr>
+                        </table>
+                    `;
+                    $('.fieldDetails')[0].innerHTML = output;
+
+                    getResultPos();
+                    $('#batPos')[0].addEventListener('change', getResultPos);
+
+                    function getResultPos(){
+                        let pos = $('#batPos')[0].value;
+                        $.ajax({
+                            type: 'POST',
+                            url: '/views/overall/batPos/' + pos + 'overs' + matchOvers,
+                            success: function (response){
+                                let output = `
+                                    <div class="col-sm">
+                                        <table class="table table-hover table-borderless">
+                                            <tr>
+                                                <td><h5>Runs</h5></td>
+                                                <td><h5>${response.batRuns}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Balls</h5></td>
+                                                <td><h5>${response.batBalls}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Dots</h5></td>
+                                                <td><h5>${response.bat0}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Ones</h5></td>
+                                                <td><h5>${response.bat1}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Twoes</h5></td>
+                                                <td><h5>${response.bat2}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Threes</h5></td>
+                                                <td><h5>${response.bat3}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Fours</h5></td>
+                                                <td><h5>${response.bat4}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Fives</h5></td>
+                                                <td><h5>${response.bat5}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Sixes</h5></td>
+                                                <td><h5>${response.bat6}</h5></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm">
+                                        <table class="table table-hover table-borderless mb-0">
+                                            <tr>
+                                                <td><h5>Matches</h5></td>
+                                                <td><h5>${matches}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Innings</h5></td>
+                                                <td><h5>${response.batIngs}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Average</h5></td>
+                                                <td><h5>${response.batAvg}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Strike Rate</h5></td>
+                                                <td><h5>${response.batSR}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Fifties</h5></td>
+                                                <td><h5>${response.bat50}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Hundreds</h5></td>
+                                                <td><h5>${response.bat100}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Highest</h5></td>
+                                                <td><h5>${response.batHighest}</h5></td>
+                                            </tr>
+                                            <tr>
+                                                <td><h5>Not Outs</h5></td>
+                                                <td><h5>${response.batNO}</h5></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                `;
+                                $('.batDetails')[0].innerHTML = output;
+                            },
+                            error: function(err){
+                                console.log(err);
+                            }
+                        });
+                    }
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            });
+        }
+    });
+</script>

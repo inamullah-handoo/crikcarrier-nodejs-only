@@ -1,0 +1,7 @@
+/node_modules
+/old
+/public/bootstrap
+/public/sass
+/public/css/style.css.map
+/routes/progress.js
+/views/progress

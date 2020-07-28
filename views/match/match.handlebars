@@ -1,0 +1,203 @@
+<div class="alert alert-success">
+    <h3>Match Details</h3>
+    <hr class="bg-success">
+    <div class="row">
+        <div class="col-sm-2 p-0 text-center">
+            <label for="date" class="font-weight-bold">Date</label>
+            <span class="ml-2">{{date}}</span>
+        </div>
+        <div class="col-sm-3 p-0 text-center">
+            <label for="tournament" class="font-weight-bold">Tournament</label>
+            <span class="ml-2">{{tournament}}</span>
+        </div>
+        <div class="col-sm-3 p-0 text-center">
+            <label for="playedAgainst" class="font-weight-bold">Played Against</label>
+            <span class="ml-2">{{playedAgainst}}</span>
+        </div>
+        <div class="col-sm-2 p-0 text-center">
+            <label for="playedAt" class="font-weight-bold">Played At</label>
+            <span class="ml-2">{{playedAt}}</span>
+        </div>
+        <div class="col-sm-2 p-0 text-center">
+            <label for="matchOvers" class="font-weight-bold">Match Overs</label>
+            <span class="ml-2">{{matchOvers}}</span>
+        </div>
+    </div>
+</div>
+<div class="form ml-auto w-50 mb-3">
+    <div class="form-inline">
+        <a href="/match/editMatch/{{matchID}}" class="btn btn-success">Edit Match Details</a>
+        <a href="javascript:void(0)" id="deleteMatch" data-id="{{matchID}}" class="btn btn-danger ml-3">Delete Match</a>
+    </div>
+</div>
+{{#if bat}}
+    <div class="alert alert-success">
+        <h3>Batting</h3>
+        <hr class="bg-success">
+        <div class="row justify-content-around">
+            <div class="col-sm-2">
+                <table class="table table-sm table-hover table-borderless mb-0">
+                    <tr>
+                        <td class="font-weight-bold">Runs</td>
+                        <td>{{bat.batRuns}}
+                            {{#ifCond bat.batNO true}}*
+                            {{/ifCond}}
+                            </td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Balls</td>
+                        <td>{{bat.batBalls}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Dots</td>
+                        <td>{{bat.bat0}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Strike Rate</td>
+                        <td>{{bat.batSR}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-2">
+                <table class="table table-sm table-hover table-borderless mb-0">
+                    <tr>
+                        <td class="font-weight-bold">Ones</td>
+                        <td>{{bat.bat1}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Twoes</td>
+                        <td>{{bat.bat2}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Threes</td>
+                        <td>{{bat.bat3}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Bat Position</td>
+                        <td>{{bat.batPos}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-2">
+                <table class="table table-sm table-hover table-borderless mb-0">        
+                    <tr>
+                        <td class="font-weight-bold">Fours</td>
+                        <td>{{bat.bat4}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Fives</td>
+                        <td>{{bat.bat5}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Sixes</td>
+                        <td>{{bat.bat6}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{{/if}}
+{{#if bowl}}
+    <div class="alert alert-success">
+        <h3>Bowling</h3>
+        <hr class="bg-success">
+        <div class="row justify-content-around">
+            <div class="col-sm-2">
+                <table class="table table-sm table-hover table-borderless mb-0">
+                    <tr>
+                        <td class="font-weight-bold">Overs</td>
+                        <td>{{bowl.bowlOvers}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Runs</td>
+                        <td>{{bowl.bowlRuns}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Wickets</td>
+                        <td>{{bowl.bowlWickets}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-2">
+                <table class="table table-sm table-hover table-borderless mb-0">
+                    <tr>
+                        <td class="font-weight-bold">Strike Rate</td>
+                        <td>{{bowl.bowlSR}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Maidens</td>
+                        <td>{{bowl.bowlMaidens}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Dot Balls</td>
+                        <td>{{bowl.bowlDots}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-sm-2">
+                <table class="table table-sm table-hover table-borderless mb-0">
+                    <tr>
+                        <td class="font-weight-bold">Extras</td>
+                        <td>{{bowl.bowlExtras}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Fours</td>
+                        <td>{{bowl.bowl4}}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-weight-bold">Sixes</td>
+                        <td>{{bowl.bowl6}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+{{/if}}
+<div class="alert alert-success">
+    <h3>Fielding</h3>
+    <hr class="bg-success">
+    <div class="row justify-content-around">
+        <div class="col-sm-2">
+            <table class="table table-sm table-hover table-borderless mb-0">
+                <tr>
+                    <td class="font-weight-bold">Catches</td>
+                    <td>{{catches}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-2">
+            <table class="table table-sm table-hover table-borderless mb-0">
+                <tr>
+                    <td class="font-weight-bold">Run Outs</td>
+                    <td>{{RO}}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-sm-2">
+            <table class="table table-sm table-hover table-borderless mb-0">
+                <tr>
+                    <td class="font-weight-bold">Stumps</td>
+                    <td>{{stumps}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#deleteMatch')[0].addEventListener('click', e => {
+        $target = $(e.target);
+        const id = $target.attr('data-id');
+        $.ajax({
+            type: 'DELETE',
+            url: '/match/deleteMatch/' + id,
+            success: function(res){
+                alert(res);
+                window.location.href = '/';
+            },
+            error: function(err){
+                console.log(err);
+            }
+        });
+    });
+</script>

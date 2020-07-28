@@ -1,0 +1,401 @@
+<div class="form w-75 mx-auto">
+    <form action="/match/addMatch" method="POST">
+        <div class="row">
+            <div class="col-md">
+                <div class="border border-success rounded px-5 py-4">
+                    <div class="form-group mb-0">
+                        <label for="tournament"><h5 class="mb-0">Tournament Name
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'tournament'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input type="text" name="tournament" class="form-control w-75 ml-auto" value="{{#if tournament}}{{tournament}}{{else}}Single Match{{/if}}">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="border border-success rounded px-5 py-4">
+                    <div class="form-group mb-0">
+                        <label for="date" class="w-100"><h5 class="mb-0 text-right">Date of Match
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'date'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input type="date" name="date" class="form-control w-75" value="{{date}}">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row PlayedDetail border border-success rounded px-5 py-4 mt-3">
+            <div class="col-md border-right border-success pr-5">
+                <div class="form-inline">
+                    <label for="playedAgainst"><h5 class="mb-0">Played Against
+                    {{#if errors}}
+                        {{#each errors}}
+                            {{#ifCond param 'playedAgainst'}}
+                                <br><small class="text-danger text-monospace">*{{msg}}</small>
+                            {{/ifCond}}
+                        {{/each}}
+                    {{/if}}
+                    </h5></label>
+                    <input value="{{playedAgainst}}" type="text" name="playedAgainst" placeholder="Played Against" class="form-control w-50 ml-auto">
+                </div>
+            </div>
+            <div class="col-md border-left border-success pl-5">
+                <div class="form-inline">
+                    <input value="{{playedAt}}" type="text" name="playedAt" placeholder="Played At" class="form-control w-50">
+                    <label for="playedAt" class="ml-auto"><h5 class="mb-0">Played At
+                    {{#if errors}}
+                        {{#each errors}}
+                            {{#ifCond param 'playedAt'}}
+                                <br><small class="text-danger text-monospace">*{{msg}}</small>
+                            {{/ifCond}}
+                        {{/each}}
+                    {{/if}}
+                    </h5></label>
+                </div>
+            </div>
+        </div>
+
+        {{!-- playing style/detail --}}
+        <div class="playDetail border border-success rounded px-5 py-4 mt-3 w-50 mx-auto">
+            <div class="form-group mb-0 text-center">
+                <label for="matchOvers"><h5 class="mb-0">Match Overs
+                {{#if errors}}
+                    {{#each errors}}
+                        {{#ifCond param 'matchOvers'}}
+                            <br><small class="text-danger text-monospace">*{{msg}}</small>
+                        {{/ifCond}}
+                    {{/each}}
+                {{/if}}
+                </h5></label>
+                <input value="{{matchOvers}}" type="number" name="matchOvers" placeholder="Match Overs" class="form-control w-75 mx-auto">
+            </div>
+        </div>
+        <div class="playDetail border border-success rounded px-5 py-4 mt-3 w-50 mx-auto">
+            <select name="playDetail" id="playDetail" class="form-control">
+                {{{options}}}
+            </select>
+        </div>
+
+        {{!-- list to be displayed according to playing style/detail --}}
+        <div class="row mt-3">
+            <div class="col-md">
+                <div class="batDetail border border-success rounded px-5 py-4" id="battingDetails">
+                    <h4 class="mb-0">Batting</h4>
+                    <hr class="bg-success">
+                    <div class="form-inline">
+                        <label for="batRuns"><h5 class="mb-0">Runs Scored
+                            {{#if errors}}
+                                {{#each errors}}
+                                    {{#ifCond param 'batRuns'}}
+                                        <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                    {{/ifCond}}
+                                {{/each}}
+                            {{/if}}
+                            </h5></label>
+                        <input value="{{batRuns}}" type="number" name="batRuns" placeholder="Runs" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batBalls"><h5 class="mb-0">Balls Faced
+                            {{#if errors}}
+                                {{#each errors}}
+                                    {{#ifCond param 'batBalls'}}
+                                        <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                    {{/ifCond}}
+                                {{/each}}
+                            {{/if}}
+                        </h5></label>
+                        <input value="{{batBalls}}" type="number" name="batBalls" placeholder="Balls" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batDots"><h5 class="mb-0">Dot Balls
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'batDots'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input value="{{batDots}}" type="number" name="batDots" placeholder="Dots" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batOnes"><h5 class="mb-0">1's
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'batOnes'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input value="{{batOnes}}" type="number" name="batOnes" placeholder="1's" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batTwoes"><h5 class="mb-0">2's
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'batTwoes'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input value="{{batTwoes}}" type="number" name="batTwoes" placeholder="2's" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batThrees"><h5 class="mb-0">3's
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'batThrees'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input value="{{batThrees}}" type="number" name="batThrees" placeholder="3's" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batFours"><h5 class="mb-0">4's
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'batFours'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input value="{{batFours}}" type="number" name="batFours" placeholder="4's" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batFives"><h5 class="mb-0">5's
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'batFives'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input value="{{batFives}}" type="number" name="batFives" placeholder="5's" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batSixes"><h5 class="mb-0">6's
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'batSixes'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input value="{{batSixes}}" type="number" name="batSixes" placeholder="6's" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batNO"><h5 class="mb-0">Not Out
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'batNO'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input value="{{batNO}}" type="text" name="batNO" placeholder="Y/N" class="form-control w-41 ml-auto">
+                    </div>
+                    <div class="form-inline mt-1">
+                        <label for="batBatPos"><h5 class="mb-0">Batting Position
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'batBatPos'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                        <input value="{{batBatPos}}" type="number" name="batBatPos" placeholder="Bat Position" class="form-control w-41 ml-auto">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="bowlDetail border border-success rounded px-5 py-4" id="bowlingDetails">
+                    <h4 class="mb-0">Bowling</h4>
+                    <hr class="bg-success">
+                    <div class="form-inline">
+                        <input value="{{bowlOvers}}" type="number" name="bowlOvers" placeholder="Overs" class="form-control w-41">
+                        <label for="bowlOvers" class="ml-auto"><h5 class="mb-0">Overs Bowled
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'bowlOvers'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                    </div>
+                    <div class="form-inline mt-1">
+                        <input value="{{bowlWickets}}" type="number" name="bowlWickets" placeholder="Wickets" class="form-control w-41">
+                        <label for="bowlWickets" class="ml-auto"><h5 class="mb-0">Wickets Taken
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'bowlWickets'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                    </div>
+                    <div class="form-inline mt-1">
+                        <input value="{{bowlDots}}" type="number" name="bowlDots" placeholder="Dots" class="form-control w-41">
+                        <label for="bowlDots" class="ml-auto"><h5 class="mb-0">Dot Balls
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'bowlDots'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                    </div>
+                    <div class="form-inline mt-1">
+                        <input value="{{bowlMaidens}}" type="number" name="bowlMaidens" placeholder="Maidens" class="form-control w-41">
+                        <label for="bowlMaidens" class="ml-auto"><h5 class="mb-0">Maiden Overs
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'bowlMaidens'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                    </div>
+                    <div class="form-inline mt-1">
+                        <input value="{{bowlRuns}}" type="number" name="bowlRuns" placeholder="Runs" class="form-control w-41">
+                        <label for="bowlRuns" class="ml-auto"><h5 class="mb-0">Runs Given
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'bowlRuns'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                    </div>
+                    <div class="form-inline mt-1">
+                        <input value="{{bowlExtras}}" type="number" name="bowlExtras" placeholder="Extras" class="form-control w-41">
+                        <label for="bowlExtras" class="ml-auto"><h5 class="mb-0">Extras
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'bowlExtras'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                    </div>
+                    <div class="form-inline mt-1">
+                        <input value="{{bowlFours}}" type="number" name="bowlFours" placeholder="4's" class="form-control w-41">
+                        <label for="bowlFours" class="ml-auto"><h5 class="mb-0">4's
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'bowlFours'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                    </div>
+                    <div class="form-inline mt-1">
+                        <input value="{{bowlSixes}}" type="number" name="bowlSixes" placeholder="6's" class="form-control w-41">
+                        <label for="bowlSixes" class="ml-auto"><h5 class="mb-0 wrap">6's
+                        {{#if errors}}
+                            {{#each errors}}
+                                {{#ifCond param 'bowlSixes'}}
+                                    <br><small class="text-danger text-monospace">*{{msg}}</small>
+                                {{/ifCond}}
+                            {{/each}}
+                        {{/if}}
+                        </h5></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="fieldDetail border border-success rounded px-5 py-4 mt-3">
+            <div class="form-inline">
+                <label for="fieldCatches"><h5 class="mb-0">Catches
+                {{#if errors}}
+                    {{#each errors}}
+                        {{#ifCond param 'fieldCatches'}}
+                            <br><small class="text-danger text-monospace">*{{msg}}</small>
+                        {{/ifCond}}
+                    {{/each}}
+                {{/if}}
+                </h5></label>
+                <input value="{{fieldCatches}}" type="number" name="fieldCatches" placeholder="Catches" class="form-control w-41 ml-auto">
+            </div>
+            <div class="form-inline mt-1">
+                <label for="fieldRO"><h5 class="mb-0">Run Outs
+                {{#if errors}}
+                    {{#each errors}}
+                        {{#ifCond param 'fieldRO'}}
+                            <br><small class="text-danger text-monospace">*{{msg}}</small>
+                        {{/ifCond}}
+                    {{/each}}
+                {{/if}}
+                </h5></label>
+                <input value="{{fieldRO}}" type="number" name="fieldRO" placeholder="Run Outs" class="form-control w-41 ml-auto">
+            </div>
+            <div class="form-inline mt-1">
+                <label for="feildStumps"><h5 class="mb-0 wrap">Stumps
+                {{#if errors}}
+                    {{#each errors}}
+                        {{#ifCond param 'fieldStumps'}}
+                            <br><small class="text-danger text-monospace">*{{msg}}</small>
+                        {{/ifCond}}
+                    {{/each}}
+                {{/if}}
+                </h5></label>
+                <input value="{{fieldStumps}}" type="number" name="fieldStumps" placeholder="Stumps" class="form-control w-41 ml-auto">
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success form-control mt-3 w-41">Add</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(() => {
+        // default playing list according to playing style/detail
+        playDetail();
+        
+        // on changing the value of playing style/detail
+        $('#playDetail')[0].addEventListener('change', playDetail);
+
+        // playing list to be displayed
+        function playDetail(){
+            var play = $('#playDetail')[0].value;
+            if(play == 'Batting Only'){
+                $('#battingDetails').css('display','block');
+                $('#bowlingDetails').css('display','none');
+            }else if(play == 'Bowling Only'){
+                $('#bowlingDetails').css('display','block');
+                $('#battingDetails').css('display','none');
+            }else if(play == 'Both'){
+                $('#battingDetails').css('display','block');
+                $('#bowlingDetails').css('display','block');
+            }else{
+                $('#battingDetails').css('display','none');
+                $('#bowlingDetails').css('display','none');
+            }
+        }
+
+    });
+</script>
